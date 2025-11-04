@@ -38,7 +38,7 @@
 }
 
 
-#let styled(doc, assignment, title) = {
+#let assignment(doc, assignment, title) = {
   // text styles
   show link: this => {
     underline(this)
