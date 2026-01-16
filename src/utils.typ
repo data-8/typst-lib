@@ -128,21 +128,25 @@
 #let ans(answer) = {
   context[
   #if docmode.get() == "sol" [
-  #v(3pt)
   #text(fill: colorblue)[#answer]
 ]
 ]
 }
 
 
-#let _getheight(question, height, ansheight) = {
+#let _getheight(height, ansheight) = {
   // must have context when run
   let h = if docmode.get() == "sol" { 
+    if ansheight == -1 {
+    if height == auto { auto }
+    else { height - 12pt }
+  } else { 
     if ansheight == auto { auto }
-    else { ansheight - measure(question).height - 12pt }
+    else { ansheight - 12pt }
+  }
   } else {
     if height == auto { auto }
-    else { height - measure(question).height - 12pt }
+    else { height - 12pt }
   }
 
   return h
@@ -154,12 +158,13 @@
 
 #let question(question, answer, 
   ansbox: false,
-  height: auto, ansheight: auto,
+  height: auto, ansheight: -1,
+  ansalign: horizon,
   points: "") = {
   let pstr = _getptstr(points)
 
   context {
-  let h = _getheight(question, height, ansheight)
+  let h = _getheight(height, ansheight)
 
   block(width: 100%)[
     #if points != "" [
@@ -171,12 +176,16 @@
     #v(-2pt)
 
     #if ansbox == true {
-    box(width: 100%, stroke: stroke(thickness: 0.5pt, paint: if docmode.get() == "sol" { colorblue } else { black }), height: h, inset: (left: 7pt, top: 5pt, bottom: 7pt))[
-      #ans(answer)
+    box(width: 100%, stroke: stroke(thickness: 0.5pt, paint: if docmode.get() == "sol" { colorblue } else { black }), height: h, inset: (top:8.5pt, bottom:8.5pt, left: 7.5pt, right: 7.5pt))[
+      #align(ansalign)[
+        #ans(answer)
+      ]
     ]
   } else {
     box(width: 100%, stroke: none, height: h)[
-      #ans(answer)
+      #align(ansalign)[
+        #ans(answer)
+      ]
     ]
   }
 
@@ -186,34 +195,37 @@
 }
 
 #let mcq(question, choices, answer, 
-  vertical: false, cols: none, colwidths: none,
-  multi: false, symbs: none,
+  cols: 1,
+  multi: false,
   ansbox: false,
   height: auto, ansheight: auto,
+  ansalign: horizon,
   explanation: "",
   points: "",) = {
 
   let length = choices.len()
   let pstr = _getptstr(points)
 
+  let ansarr = { if type(answer) == int { (answer,) } else { answer } }
+
   context {
-  let h = _getheight(question, height, ansheight)
+  let h = _getheight(height, ansheight)
 
   let items = range(length).map(i => [
-    #let fill = if docmode.get() == "sol" and answer.contains(i) { colorblue } else { white }
-    #let strokecolor = if docmode.get() == "sol" and answer.contains(i) { colorblue } else { black }
+    #let fill = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { white }
+    #let strokecolor = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { black }
 
     #box(height: 7.5pt, width: 12pt,
       align(horizon)[
         #align(left)[
-          #if symbs == none {
+          #if multi == false or multi == true {
           if multi {
           square(size: 8.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
         } else {
           circle(radius: 4.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
         }
         } else {
-          if symbs.at(i) {
+          if multi.at(i) {
           square(size: 8.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
         } else {
           circle(radius: 4.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
@@ -225,6 +237,8 @@
 
   set enum(numbering: (..nums, last) => [#items.at(last - 1)])
 
+  let _cols = { if type(cols) == array { cols } else { range(cols).map(_ => 1fr) } }
+
   block(width: 100%)[
     #if points != "" [
     #context add_points(points);
@@ -235,7 +249,7 @@
 
     #v(-2pt)
     #grid(
-      columns: if colwidths != none { colwidths } else { range(if cols != none { cols } else { if vertical { 1 } else { choices.len() }}).map(_ => 1fr) },
+      columns: _cols,
       row-gutter: 10pt,
 
       ..choices.enumerate().map(((i, c)) =>
@@ -244,13 +258,17 @@
     )
   ]
 
-  if ansbox == true  {
-  box(width: 100%, stroke: stroke(thickness: 0.5pt, paint: if docmode.get() == "sol" { colorblue } else { black }), height: h, inset: (left: 7pt, top: 5pt, bottom: 7pt))[
-    #ans(explanation)
+  if ansbox == true {
+  box(width: 100%, stroke: stroke(thickness: 0.5pt, paint: if docmode.get() == "sol" { colorblue } else { black }), height: h, inset: 7pt)[
+    #align(ansalign)[
+      #ans(explanation)
+    ]
   ]
 } else if explanation != "" {
   box(width: 100%, stroke: none, height: h)[
-    #ans(explanation)
+    #align(ansalign)[
+      #ans(explanation)
+    ]
   ]
 }
 

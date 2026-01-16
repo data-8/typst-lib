@@ -1,5 +1,5 @@
-// Tim Xie, Fall 2025
-// Please direct any questions to xie@berkeley.edu
+// [v1.0] Tim Xie, Fall 2025
+// Please retain attribution for future semesters, and direct any questions to xie@berkeley.edu.
 
 // improved code blocks
 #import "@preview/codly:1.3.0": *

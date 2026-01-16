@@ -105,7 +105,7 @@
 
     #[
     #show raw: set text(size: 8.25pt)
-    #set text(top-edge: 4pt, baseline: 2pt)
+    #set text(top-edge: 5.5pt)
 
     - This exam is closed book, closed computer and closed calculator, except the Reference Sheet provided for you.
 
@@ -117,13 +117,12 @@
     - answers written outside the boxes provided will not be graded;
     - if your answer is ambiguous or you provide multiple answers, the worst interpretation will be graded.
 
-    - For coding questions with blanks, you may include multiple arguments or functions per blank, but your solution must use every blank available.
+    - For coding questions:
+    - blank spaces may include multiple arguments or functions per blank, but your solution must use every blank available;
+    - you may assume the `datascience` and `numpy` libraries are imported, as seen in class;
+    - the use of *any code* which has not been taught in this offering of the course is not allowed and will result in zero credit.
 
-    - For multiple choice questions, fill in bubbles/squares completely. Read more on these question types below.
-
-    - You may assume the `datascience` and `numpy` libraries are imported, as seen in class.
-
-    - The use of *any code* which has not been taught in this offering of the course is prohibited and will not be graded.
+    - For multiple choice questions, see question types and instructions below.
   ]
 
     #v(8pt)
@@ -184,7 +183,7 @@
     }
     ]
 
-    You must fill in the bubbles *completely*. Ticks, crosses, or other check marks will not receive credit.
+    You must fill in the bubbles *completely*. Ticks, crosses, or other check marks will *not* receive credit.
 
     #v(8pt)
     #line(length: 100%, stroke: 0.75pt)
@@ -270,7 +269,7 @@
     margin: (top: 2.75cm, bottom: 2.6cm, left: 1.65cm, right: 1.65cm),
     footer: context [
     #line(length: 100%, stroke: 0.75pt)
-    #v(-12pt)
+    #v(-11pt)
     #smallcaps[#text(courseid + " " + semester, size: 10pt, top-edge: 1em)]
     #h(1fr)
     #smallcaps[#text(examtitle, size: 10pt, top-edge: 1em)] | #text(counter(page).display(), size: 10pt, top-edge: 1em)
@@ -286,14 +285,24 @@
     paper: "us-letter"
   )
 
-
   blankpage()
-
-  // nextpage(text: [Exam begins])
 
   pagebreak()
 
-  [
-  #doc
-]
+  [ #doc ]
+
+  section("Congratulations!", number: false)[
+    You have now completed the #examtitle Exam. If you have not been told otherwise, you may bring all of your testing materials (reference sheet and this test paper), as well as your student ID, to the front of the room. Once you have been checked off, you may leave quietly.
+
+    - Make sure you have written your initials on *each page* of the exam, otherwise you may lose points.
+
+    - Make sure you have filled in bubbles and squares completely, and that you have *not* used a checkmark or cross.
+
+    - Double check that you have not skipped over any questions.
+
+
+    #question(ansbox:true, height:18cm, ansheight:18cm)[Below, you may draw and caption your favorite Data 8 experience or staff member!][
+
+    ]
+  ]
 }
