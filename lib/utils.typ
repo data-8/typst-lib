@@ -4,7 +4,6 @@
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
 
-
 #let section_counter = counter("sectioncounter")
 #let section_points = state("sectionpoints", ())
 
@@ -13,8 +12,8 @@
 
   section_points.update(it => {
     for i in range(it.len(), section + 1) {
-    it.push(0)
-  }
+      it.push(0)
+    }
 
     it.at(section) += p
 

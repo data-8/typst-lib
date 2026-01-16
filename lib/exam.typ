@@ -3,7 +3,6 @@
 
 #import "utils.typ": *
 
-
 // layout styles (footer, header)
 #let header(courseid, coursename, 
   semester, instructor,
@@ -260,7 +259,7 @@
   // set doc
   set document(
     title: examtitle + " " + coursename + " " + semester,
-    author: "Tim Xie"
+    author: courseid + " Staff"
   )
 
   header(courseid, coursename, semester, instructor, examtitle, date, length, sols)

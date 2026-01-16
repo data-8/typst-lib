@@ -1,12 +1,7 @@
 // [v1.0] Tim Xie, Fall 2025
 // Please retain attribution for future semesters, and direct any questions to xie@berkeley.edu.
 
-// improved code blocks
-#import "@preview/codly:1.3.0": *
-#import "@preview/codly-languages:0.1.1": *
-
 #import "utils.typ": *
-
 
 // layout styles (footer, header)
 #let header(courseid, coursename, semester, title, assignment) = {
@@ -104,7 +99,7 @@
     paper: "us-letter"
   )
 
-  
+
   // set doc
   set document(
     title: assignment + " " + courseid + " " + semester,
