@@ -9,7 +9,7 @@
 
 
 // layout styles (footer, header)
-#let header(title, assignment) = {
+#let header(courseid, coursename, semester, title, assignment) = {
   box(height: 75pt, [
     #box(height:35pt)[
       #line(length: 100%, stroke: 1pt)
@@ -29,16 +29,15 @@
 
     #v(4pt)
 
-    #smallcaps[#text("Data C8: Foundations of Data Science", tracking: 0.003em, size: 11pt)]
+    #smallcaps[#text(courseid + ": " + coursename, tracking: 0.003em, size: 11pt)]
     #h(1fr)
-    #smallcaps[#text("UC Berkeley, Fall 2025", tracking: 0.003em, size: 11pt)]
+    #smallcaps[#text("UC Berkeley, " + semester, tracking: 0.003em, size: 11pt)]
 
     #v(0pt, weak: true)
   ])
 }
 
-
-#let assignment(doc, assignment, title) = {
+#let assignment(doc, courseid: "Data XX", coursename: "Data Science", semester: "Fall 2025", assignment: "Discussion 01", title: "Intro", sols: false) = {
   // text styles
   show link: this => {
     underline(this)
@@ -97,7 +96,7 @@
     #if(counter(page).get().at(0) == 1) [] else [
     #line(length: 100%, stroke: 0.75pt)
     #v(-8pt)
-    #smallcaps[Data C8 Fall 2025]
+    #smallcaps[#courseid #semester]
     #h(1fr)
     #smallcaps[#assignment] | #counter(page).display()
   ]
@@ -105,28 +104,14 @@
     paper: "us-letter"
   )
 
-
-  // code block formatting
-  // show: codly-init.with()
-  // codly(zebra-fill: none)
-  // codly(number-format: none)
-  // codly(display-name: false)
-  // codly(stroke: none)
-
-  // show raw.where(block: true): it => { set text(top-edge: 18pt); v(-12pt); it; v(-12pt)}
-
-  // TODO: FIX
-  // code blocks (in PRINT mode, don't show syntax highlighting)
-  // context { set raw(theme: if docmode.get() == "print" { none } else { auto } ) }
-
+  
   // set doc
   set document(
-    title: assignment + " Data C8 Fall 2025",
-    author: "Tim Xie"
+    title: assignment + " " + courseid + " " + semester,
+    author: courseid + " Staff"
   )
 
-
-  header(title, assignment)
+  header(courseid, coursename, semester, title, assignment)
 
   doc
 }
