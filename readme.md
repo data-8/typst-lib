@@ -8,12 +8,13 @@ Templates and formatting for Data 8's Discussion and Tutoring Worksheets, Refere
 - multiple choice questions (single select and multiselect, or mix of bubble types)
 - answer boxes for long answer questions
 - native typst indentation for subquestions
-- togglable document modes (print, screen, answer), [see below](#exporting)
 - syntax highlighting for code blocks
 - custom answer blank for coding questions
 - callouts for notes and information boxes
+- assignment and exam template, [see below](#templates)
+- togglable document modes (print, screen, answer), [see below](#exporting--accessibility)
 
-Example PDFs can be found in the [`examples/`](https://github.com/data-8/typst-lib/tree/main/examples) directory. A quick start skeleton template can be found in the root directory as `example.typ`.
+Example PDFs can be found in the [`examples/`](./examples) directory and quick start templates in the [`quickstart/`](./quickstart) directory.
 
 
 <img width="2550" height="1650" alt="1" src="https://github.com/user-attachments/assets/eaf486b0-aca0-4ef9-8c2d-f585a52ea264" />
@@ -37,7 +38,7 @@ There are three library files: `utils.typ` which defines the different question 
 - [Info / Callouts](#info-blockcallout)
 - [Other Utilities](#other-utilities)
 - [Templates](#templates)
-- [Exporting](#exporting)
+- [Exporting](#exporting--accessibility)
 
 ## Question Components
 
