@@ -25,7 +25,7 @@ There are three library files: `utils.typ` which defines the different question 
 
 ## Question Components
 
-### 1. **Long answer questions (`#question`)**
+### 1. **Long answer questions**
 
 ```typst
 #question(ansbox, height, ansheight, ansalign, points)[<question>][<answer>]
@@ -40,7 +40,7 @@ There are three library files: `utils.typ` which defines the different question 
 - **`ansalign`** (`alignment`, default: `horizon`): alignment of the content
 - **`points`** (`float`, default: `""`): points assigned to the question
 
-> **Example**
+> **Examples**
 > ```typst
 > #question(ansbox: true, ansheight: 3cm, points: 4.0)[
 >    What is $2 + 2$? Write a statement to evaluate in Python.
@@ -49,20 +49,16 @@ There are three library files: `utils.typ` which defines the different question 
 >    `2 + 2  # 4`
 > ]
 > ```
-> 
-> Without answer shown: <br>
-    <img width="768" height="110" alt="Screenshot 2026-01-17 at 11 58 17" src="https://github.com/user-attachments/assets/e226df70-660b-4ea2-aad4-cdaf18abdac0" /> <br>
-> With answer shown: <br>
-    <img width="768" height="110" alt="Screenshot 2026-01-17 at 11 58 42" src="https://github.com/user-attachments/assets/e479fb8b-be28-406a-ab85-1ef1d0dba9be" />
-
+> <p align="center"><img width="768" height="110" alt="Screenshot 2026-01-17 at 11 58 17" src="https://github.com/user-attachments/assets/e226df70-660b-4ea2-aad4-cdaf18abdac0" /><br>(without answer shown)</p>
+> <p align="center"><img width="768" height="110" alt="Screenshot 2026-01-17 at 11 58 42" src="https://github.com/user-attachments/assets/e479fb8b-be28-406a-ab85-1ef1d0dba9be" /><br>(with answer shown)</p>
+    
 **Notes**
-
 - when the answer box is *not* shown, the default `ansheight` is auto (fits to content). When the answer box is shown, the default `ansheight` is the same as the height defined.
   - you may override `ansheight` to your liking if you don't want this behaviour
 
 <br>
    
-### **2. Multiple choice questions (`#mcq`)**
+### **2. Multiple choice questions**
 
 ```typst
 #mcq(question, choices, answer, 
@@ -80,7 +76,7 @@ There are three library files: `utils.typ` which defines the different question 
 - **`ansbox, height, ansheight, ansalign, points`**: same as `#question` (see above)
 
 
-> **Example**
+> **Examples**
 > ```typst
 > #mcq([What will the following Python expression be equivalent to?
 >      #align(center)[`2 + 2`]
@@ -95,23 +91,66 @@ There are three library files: `utils.typ` which defines the different question 
 >     points: 3.0,
 >     multi: (true, true, true, true, false)
 > )
+> ```
+> <p align="center"><img style='border:"1px solid black";' width="768" height="186" alt="Screenshot 2026-01-17 at 12 13 59" src="https://github.com/user-attachments/assets/193c19fc-b8bd-47f2-a370-c1100f29b107" /><br>(with answer shown)</p>
 > 
-> With answer shown: <br>
-    <img width="768" height="186" alt="Screenshot 2026-01-17 at 12 13 59" src="https://github.com/user-attachments/assets/193c19fc-b8bd-47f2-a370-c1100f29b107" />
+> ```typst
+> #mcq([You can display options with different column lengths.], (
+>       [Option 1], [Option 2], [Option 3], [Option 4]
+>      ),
+>      2,
+>      points: 3.0,
+>      multi: false,
+>      cols: (2.5cm, 5cm, 7cm, 4cm),
+> )
+> ```
+> <p align="center"><img width="768" height="62" alt="Screenshot 2026-01-17 at 16 39 11" src="https://github.com/user-attachments/assets/b4988328-a7bf-40f5-9e73-9bbedc669c9d" /><br>(with answer shown)</p>
 
+<br>
 
 
 ### **3. Answer bank**
 
+```typst
+#ansbank(cols, choices) 
+````
 
-### Document Formatting
+**Parameters**
+- **`cols`** (`int`): number of columns to display answer choices
+- **`choices`** (array of `content`, required): choices
+
+> **Examples**
+> ```typst
+> #ansbank(cols: 3, choices: (
+>   [$x^2$], "Any linear function", `x ** 2`,
+>   "Any quadratic function", $x dot.c x dot.c x$, `pow(x, 3)`,
+>   $sin(x)$, "Any quartic function", $cos(x)$
+> ))
+> 
+> #mcq([
+>     What of the following functions are even?
+>   ], 
+>   range(9).map(i => [*#str.from-unicode(65 + i)*]) + ("None of the above",),
+>   (0,2,8),
+>   points: 1.0,
+>   cols: range(9).map(i => 1.53cm) + (10cm,),
+>   multi: range(9).map(i => true) + (false,)
+> )
+> ```
+> <p align="center"><img width="768" height="195" alt="Screenshot 2026-01-17 at 16 51 19" src="https://github.com/user-attachments/assets/ff0e7a39-74ad-471c-99dd-dd105fcac4b9" /><br>(with answer shown)</p>
+
+
+
+<br>
+
+## Document Formatting
 
 1. Section
 2. Subtitle
 
-### Info Block/Callout
+## Info Block/Callout
 
-### Other Utilities
+## Other Utilities
 
 1. Boxed Math
 2. Blank page indicator
