@@ -102,16 +102,20 @@
 
 #let pp = subtitle("Practice Problems")
 
-#let section(title, height: auto, number: false, content) = {
+#let section(title, height: auto, number: true, points: false, content) = {
   block(height: height)[
     #if number == true [
     #section_counter.step()
     #context {
-    let points = section_points.final().at(section_counter.get().at(0) - 1, default: 0)
+    let pts = section_points.final().at(section_counter.get().at(0) - 1, default: 0)
 
-    let pstr = if points == 1 { "point" } else { "points" }
+    let pstr = if pts == 1 { "point" } else { "points" }
     add_points(0.0)
-    text(section_counter.display("1. ") + "[" + repr(points) + " " + pstr + "]  " + title, size: 14.5pt, weight: 500, tracking: -0.01em)
+    if points {
+      text(section_counter.display("1. ") + "[" + repr(pts) + " " + pstr + "]  " + title, size: 14.5pt, weight: 500, tracking: -0.01em)
+    } else {
+      text(section_counter.display("1. ") + title, size: 14.5pt, weight: 500, tracking: -0.01em)
+    }
   }
 
   ] else [
@@ -125,23 +129,23 @@
 
 #let ans(answer) = {
   context[
-  #if docmode.get() == "sol" [
-  #text(fill: colorblue)[#answer]
-]
-]
+    #if docmode.get() == "sol" [
+      #text(fill: colorblue)[#answer]
+    ]
+  ]
 }
 
 
 #let _getheight(height, ansheight) = {
-  // must have context when run
+  // NOTE: must have context when run
   let h = if docmode.get() == "sol" { 
     if ansheight == -1 {
-    if height == auto { auto }
-    else { height - 12pt }
-  } else { 
-    if ansheight == auto { auto }
-    else { ansheight - 12pt }
-  }
+      if height == auto { auto }
+      else { height - 12pt }
+    } else { 
+      if ansheight == auto { auto }
+      else { ansheight - 12pt }
+    }
   } else {
     if height == auto { auto }
     else { height - 12pt }
@@ -162,34 +166,34 @@
   let pstr = _getptstr(points)
 
   context {
-  let h = _getheight(height, ansheight)
+    let h = _getheight(height, ansheight)
 
-  block(width: 100%)[
-    #if points != "" [
-    #context add_points(points);
-    #text("[" + repr(points) + " " + pstr + "] ", weight: 500) #text(question)
-  ] else [
-    #question
-  ]
-    #v(-2pt)
-
-    #if ansbox == true {
-    box(width: 100%, stroke: stroke(thickness: 0.5pt, paint: if docmode.get() == "sol" { colorblue } else { black }), height: h, inset: (top:8.5pt, bottom:8.5pt, left: 7.5pt, right: 7.5pt))[
-      #align(ansalign)[
-        #ans(answer)
-      ]
+    block(width: 100%)[
+      #if points != "" [
+      #context add_points(points);
+      #text("[" + repr(points) + " " + pstr + "] ", weight: 500) #text(question)
+    ] else [
+      #question
     ]
-  } else {
-    box(width: 100%, stroke: none, height: h)[
-      #align(ansalign)[
-        #ans(answer)
+      #v(-2pt)
+
+      #if ansbox == true {
+      box(width: 100%, stroke: stroke(thickness: 0.5pt, paint: if docmode.get() == "sol" { colorblue } else { black }), height: h, inset: (top:8.5pt, bottom:8.5pt, left: 7.5pt, right: 7.5pt))[
+        #align(ansalign)[
+          #ans(answer)
+        ]
       ]
+    } else {
+      box(width: 100%, stroke: none, height: h)[
+        #align(ansalign)[
+          #ans(answer)
+        ]
+      ]
+    }
+
+      #if not ansbox { v(8pt) }
     ]
   }
-
-    #if not ansbox { v(8pt) }
-  ]
-}
 }
 
 #let mcq(question, choices, answer, 
@@ -207,43 +211,43 @@
   let ansarr = { if type(answer) == int { (answer,) } else { answer } }
 
   context {
-  let h = _getheight(height, ansheight)
+    let h = _getheight(height, ansheight)
 
-  let items = range(length).map(i => [
-    #let fill = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { white }
-    #let strokecolor = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { black }
+    let items = range(length).map(i => [
+      #let fill = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { white }
+      #let strokecolor = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { black }
 
-    #box(height: 7.5pt, width: 12pt,
-      align(horizon)[
-        #align(left)[
-          #if multi == false or multi == true {
-          if multi {
-          square(size: 8.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
-        } else {
-          circle(radius: 4.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
-        }
-        } else {
-          if multi.at(i) {
-          square(size: 8.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
-        } else {
-          circle(radius: 4.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
-        }
-        }]
-      ]
-    )
-  ])
+      #box(height: 7.5pt, width: 12pt,
+        align(horizon)[
+          #align(left)[
+            #if multi == false or multi == true {
+            if multi {
+            square(size: 8.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
+          } else {
+            circle(radius: 4.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
+          }
+          } else {
+            if multi.at(i) {
+            square(size: 8.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
+          } else {
+            circle(radius: 4.75pt, stroke: stroke(thickness: 0.5pt, paint: strokecolor), fill: fill)
+          }
+          }]
+        ]
+      )
+    ])
 
-  set enum(numbering: (..nums, last) => [#items.at(last - 1)])
+    set enum(numbering: (..nums, last) => [#items.at(last - 1)])
 
-  let _cols = { if type(cols) == array { cols } else { range(cols).map(_ => 1fr) } }
+    let _cols = { if type(cols) == array { cols } else { range(cols).map(_ => 1fr) } }
 
-  block(width: 100%)[
-    #if points != "" [
-    #context add_points(points);
-    #text("[" + repr(points) + " " + pstr + "] ", weight: 500) #text(question)
-  ] else [
-    #question
-  ]
+    block(width: 100%)[
+      #if points != "" [
+      #context add_points(points);
+      #text("[" + repr(points) + " " + pstr + "] ", weight: 500) #text(question)
+    ] else [
+      #question
+    ]
 
     #v(-2pt)
     #grid(
@@ -294,14 +298,14 @@
 
 #let blank(width, placeholder, answer: none) = [
   #context[
-  #box(width: width, stroke: (bottom: 0.5pt), outset: (y: 2pt, x: 1.5pt))[
-    #align(center)[
-      #text(
-        baseline: -1.5pt,
-        raw(if docmode.get() == "sol" and answer != none { answer } else { placeholder }))
+    #box(width: width, stroke: (bottom: 0.5pt), outset: (y: 2pt, x: 1.5pt))[
+      #align(center)[
+        #text(
+          baseline: -1.5pt,
+          raw(if docmode.get() == "sol" and answer != none { answer } else { placeholder }))
+      ]
     ]
   ]
-]
 ]
 
 
@@ -311,7 +315,8 @@
   ]
 }
 
-#let blankpage(text: [This page intentionally left blank
+#let blankpage(text: [
+  This page intentionally left blank
 
   The exam begins on the next page.
 ]) = {
@@ -321,9 +326,6 @@
     ]]
   ]
 }
-
-
-
 
 #let bubble(content, color) = [
   #box(content, fill: color.mix(white).transparentize(65%), radius: 3pt, inset: 2.5pt, stroke: stroke(paint: color, thickness: 0.5pt), baseline: 2.5pt)
