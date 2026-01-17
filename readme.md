@@ -275,7 +275,7 @@ You can draw boxes (like Latex) around answers with `#boxed(...)`.
 
 > **Example**
 > ```typst
-> $ y = 1/10x ==> boxed(x = 10 y) $]
+> $ y = 1/10x ==> boxed(x = 10 y) $
 > ```
 > <p align="center"><img width=90% alt="Screenshot 2026-01-17 at 18 32 18" src="https://github.com/user-attachments/assets/c856cdd8-84ad-49a0-84b7-62aa07126ee5" /></p>
 

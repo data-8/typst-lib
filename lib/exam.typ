@@ -1,6 +1,3 @@
-// [v1.0] Tim Xie, Fall 2025
-// Please retain attribution for future semesters, and direct any questions to xie@berkeley.edu.
-
 #import "utils.typ": *
 
 #let exam(doc, 
@@ -72,8 +69,7 @@
 
   // set doc
   set document(
-    title: examtitle + " " + coursename + " " + semester,
-    author: "Tim Xie"
+    title: examtitle + " " + coursename + " " + semester
   )
 
   box[
@@ -152,17 +148,17 @@
     #v(-6pt)
 
     #context[
-    You have *#length* to complete the exam. There are *#section_counter.final().at(0) questions* and *#counter(page).final().at(0) pages* on this exam, including this cover page.
+    You have *#length* to complete the exam. There are *#section-counter.final().at(0) questions* and *#counter(page).final().at(0) pages* on this exam, including this cover page.
   ]
 
     #show table.cell: set text(size: 10pt)
     #context [#align(center)[
-      #table(columns: section_counter.final().at(0) + 2,
+      #table(columns: section-counter.final().at(0) + 2,
         inset: (x: 6pt, y: 4pt),
         fill: white,
-        [Question], ..(range(1, section_counter.final().at(0) + 1).map(x => [#x])), [Total],
+        [Question], ..(range(1, section-counter.final().at(0) + 1).map(x => [#x])), [Total],
 
-        [Points], ..(section_points.final().map(x => [#x])), [#section_points.final().sum(default: 0)]
+        [Points], ..(section-points.final().map(x => [#x])), [#section-points.final().sum(default: 0)]
       )
     ]]
 

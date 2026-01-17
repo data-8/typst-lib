@@ -1,16 +1,13 @@
-// [v1.0] Tim Xie, Fall 2025
-// Please retain attribution for future semesters, and direct any questions to xie@berkeley.edu.
-
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
 
-#let section_counter = counter("sectioncounter")
-#let section_points = state("sectionpoints", ())
+#let section-counter = counter("sectioncounter")
+#let section-points = state("sectionpoints", ())
 
-#let add_points = p => {
-  let section = section_counter.get().at(0) - 1
+#let add-points = p => {
+  let section = section-counter.get().at(0) - 1
 
-  section_points.update(it => {
+  section-points.update(it => {
     for i in range(it.len(), section + 1) {
       it.push(0)
     }
@@ -108,16 +105,16 @@
 #let section(title, height: auto, number: true, points: false, content) = {
   block(height: height)[
     #if number == true [
-    #section_counter.step()
+    #section-counter.step()
     #context {
-    let pts = section_points.final().at(section_counter.get().at(0) - 1, default: 0)
+    let pts = section-points.final().at(section-counter.get().at(0) - 1, default: 0)
 
     let pstr = if pts == 1 { "point" } else { "points" }
-    add_points(0.0)
+    add-points(0.0)
     if points {
-      text(section_counter.display("1. ") + "[" + repr(pts) + " " + pstr + "]  " + title, size: 14.5pt, weight: 500, tracking: -0.01em)
+      text(section-counter.display("1. ") + "[" + repr(pts) + " " + pstr + "]  " + title, size: 14.5pt, weight: 500, tracking: -0.01em)
     } else {
-      text(section_counter.display("1. ") + title, size: 14.5pt, weight: 500, tracking: -0.01em)
+      text(section-counter.display("1. ") + title, size: 14.5pt, weight: 500, tracking: -0.01em)
     }
   }
 
@@ -173,7 +170,7 @@
 
     block(width: 100%)[
       #if points != "" [
-      #context add_points(points);
+      #context add-points(points);
       #text("[" + repr(points) + " " + pstr + "] ", weight: 500) #text(question)
     ] else [
       #question
@@ -246,7 +243,7 @@
 
     block(width: 100%)[
       #if points != "" [
-      #context add_points(points);
+      #context add-points(points);
       #text("[" + repr(points) + " " + pstr + "] ", weight: 500) #text(question)
     ] else [
       #question

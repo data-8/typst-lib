@@ -1,6 +1,3 @@
-// [v1.0] Tim Xie, Fall 2025
-// Please retain attribution for future semesters, and direct any questions to xie@berkeley.edu.
-
 #import "utils.typ": *
 
 #let assignment(doc, 
