@@ -3,12 +3,79 @@
 
 #import "utils.typ": *
 
-// layout styles (footer, header)
-#let header(courseid, coursename, 
-  semester, instructor,
-  examtitle, 
-  date, length, 
-  sols) = {
+#let exam(doc, 
+  courseid: "",
+  coursename: "",
+  school: "",
+  semester: "",
+  instructor: "",
+  examtitle: "",
+  date: "",
+  length: "",
+  blanks: ("Your Name", "Your Student ID"),
+  instructions: "",
+  extra: "",
+  sols: false) = {
+  set par(justify: true)
+  set text(size: 10pt)
+  show smallcaps: set text(font: "Libertinus Serif")
+
+  // custom raw for print
+  // https://github.com/typst/typst/issues/1331
+  set raw(lang: "python")  // all are default python
+
+  show raw: set text(size: 8pt)
+
+  show raw: it => context {
+    if docmode.get() == "screen" or it.theme == none { return it }
+
+    let fields = it.fields()
+    let text = fields.remove("text")
+    _ = fields.remove("lines")
+    fields.at("theme") = none
+    raw(..fields, text)
+  }
+
+  // table styles
+  show table.cell: set text(size: 9pt)
+  show table.cell.where(y: 0): set text(size: 9pt, weight: 700)
+
+  // enum styles, https://forum.typst.app/t/how-can-i-format-an-enums-numbering-without-overriding-the-numbering-style/3246
+  set enum(
+    full: true, 
+    numbering: (..nums, last) => {
+    text(
+      weight: "bold", 
+      numbering(("(a)","i.").at(nums.pos().len(), default: "1."), last)
+    )
+  }
+  )
+
+  set table(
+    stroke: (x, y) => (
+    left: if x == 0 { 0.5pt } else { 0pt },
+    right: 0.5pt,
+    top: if y <= 1 { 0.5pt } else { 0pt },
+    bottom: 0.5pt,
+  ),
+    fill: (_, y) =>
+    if calc.even(y) { luma(245) }
+    else { white },
+    inset: (x: 10pt, y: 5pt),
+  )
+
+  // format page (margins, set footer)
+  set page(
+    margin: (top: 1.65cm, bottom: 2.65cm, left: 1.65cm, right: 1.65cm),
+    paper: "us-letter"
+  )
+
+  // set doc
+  set document(
+    title: examtitle + " " + coursename + " " + semester,
+    author: "Tim Xie"
+  )
+
   box[
     #box(height: 35pt)[
       #line(length: 100%, stroke: 1pt)
@@ -28,7 +95,7 @@
         [
         #align(horizon)[
           #align(center)[
-            #smallcaps[#text(coursename, size: 18pt, tracking: -0.03em, weight: 500)]
+            #smallcaps[#text(coursename, size: 17pt, tracking: -0.03em, weight: 500)]
           ]
         ]
       ], 
@@ -64,25 +131,22 @@
     ]
 
     #[
-    #set par(justify: false)
-    #set text(top-edge: 18pt)
-    #smallcaps[Print] Your Name: #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
+      #set par(justify: false)
+      #set text(top-edge: 18pt)
+  
+      #for x in blanks [
+        #smallcaps[Print] #x: #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
+        
+      ]
 
-    #smallcaps[Print] Your Student ID: #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
+      #if blanks.len() > 0 [
+        #v(8pt)
+        #line(length: 100%, stroke: 0.75pt)
+      ]
+    ]
 
-    #smallcaps[Print] Your Exam Room: #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
-
-    #smallcaps[Print] the Name of Person to your Left:  #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
-
-    #smallcaps[Print] the Name of Person to your Right:  #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
-
-    #smallcaps[Print] Your GSI's Name (Write N/A if in Self-Service): #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
-  ]
-
-    #v(8pt)
-    #line(length: 100%, stroke: 0.75pt)
     #v(4pt)
-
+    
     #smallcaps[#text("Instructions", size: 12pt, weight: 500, tracking: -0.03em)]
 
     #v(-6pt)
@@ -102,27 +166,7 @@
       )
     ]]
 
-    #[
-    #show raw: set text(size: 8.25pt)
-    #set text(top-edge: 5.5pt)
-
-    - This exam is closed book, closed computer and closed calculator, except the Reference Sheet provided for you.
-
-    - You may only have with you: a pencil, an eraser and your student ID, unless you have pre-approved accommodations.
-
-    - If you need to use the restroom, bring your phone, exam, reference sheet and student ID to the front of the room.
-
-    - For written questions:
-      - answers written outside the boxes provided will not be graded;
-      - if your answer is ambiguous or you provide multiple answers, the worst interpretation will be graded.
-
-    - For coding questions:
-      - blank spaces may include multiple arguments or functions per blank, but your solution must use every blank available;
-      - you may assume the `datascience` and `numpy` libraries are imported, as seen in class;
-      - the use of *any code* which has not been taught in this offering of the course is not allowed and will result in zero credit.
-
-    - For multiple choice questions, see question types and instructions below.
-  ]
+    #instructions
 
     #v(8pt)
     #line(length: 100%, stroke: 0.75pt)
@@ -184,85 +228,18 @@
 
     You must fill in the bubbles *completely*. Ticks, crosses, or other check marks will *not* receive credit.
 
-    #v(8pt)
-    #line(length: 100%, stroke: 0.75pt)
-    #v(4pt)
+    #if extra != "" [
+      #v(8pt)
+      #line(length: 100%, stroke: 0.75pt)
+      #v(4pt)
 
-    #smallcaps[#text("Honor Code", size: 12pt, weight: 500, tracking: -0.03em)]
-
-    #v(-8pt)
-    _      "As a member of the UC Berkeley community, I act with honesty, integrity, and respect for others."_
-
-    #v(20pt)
-    #smallcaps[Sign] Your Name: #box(width: 1fr)[#line(stroke: 0.45pt, length: 100%)]
+      #extra
+    ]
   ]
 
   pagebreak()
-}
 
-
-#let exam(doc, courseid: "Data XX", coursename: "Data Science", semester: "Fall 2025", instructor: "Doe", examtitle: "Midterm", date: "some date", length: "110 minutes", sols: false) = {
-  set par(justify: true)
-  set text(size: 10pt)
-  show smallcaps: set text(font: "Libertinus Serif")
-
-  // custom raw for print
-  // https://github.com/typst/typst/issues/1331
-  set raw(lang: "python")  // all are default python
-
-  show raw: set text(size: 8pt)
-
-  show raw: it => context {
-    if docmode.get() == "screen" or it.theme == none { return it }
-
-    let fields = it.fields()
-    let text = fields.remove("text")
-    _ = fields.remove("lines")
-    fields.at("theme") = none
-    raw(..fields, text)
-  }
-
-  // table styles
-  show table.cell: set text(size: 9pt)
-  show table.cell.where(y: 0): set text(size: 9pt, weight: 700)
-
-  // enum styles, https://forum.typst.app/t/how-can-i-format-an-enums-numbering-without-overriding-the-numbering-style/3246
-  set enum(
-    full: true, 
-    numbering: (..nums, last) => {
-    text(
-      weight: "bold", 
-      numbering(("(a)","i.").at(nums.pos().len(), default: "1."), last)
-    )
-  }
-  )
-
-  set table(
-    stroke: (x, y) => (
-    left: if x == 0 { 0.5pt } else { 0pt },
-    right: 0.5pt,
-    top: if y <= 1 { 0.5pt } else { 0pt },
-    bottom: 0.5pt,
-  ),
-    fill: (_, y) =>
-    if calc.even(y) { luma(245) }
-    else { white },
-    inset: (x: 10pt, y: 5pt),
-  )
-
-  // format page (margins, set footer)
-  set page(
-    margin: (top: 1.65cm, bottom: 2.65cm, left: 1.65cm, right: 1.65cm),
-    paper: "us-letter"
-  )
-
-  // set doc
-  set document(
-    title: examtitle + " " + coursename + " " + semester,
-    author: courseid + " Staff"
-  )
-
-  header(courseid, coursename, semester, instructor, examtitle, date, length, sols)
+  // pages after title page
 
   set page(
     margin: (top: 2.75cm, bottom: 2.6cm, left: 1.65cm, right: 1.65cm),
@@ -289,19 +266,5 @@
   pagebreak()
 
   [ #doc ]
-
-  section("Congratulations!", number: false)[
-    You have now completed the #examtitle Exam. If you have not been told otherwise, you may bring all of your testing materials (reference sheet and this test paper), as well as your student ID, to the front of the room. Once you have been checked off, you may leave quietly.
-
-    - Make sure you have written your initials on *each page* of the exam, otherwise you may lose points.
-
-    - Make sure you have filled in bubbles and squares completely, and that you have *not* used a checkmark or cross.
-
-    - Double check that you have not skipped over any questions.
-
-
-    #question(ansbox:true, height:18cm, ansheight:18cm)[Below, you may draw and caption your favorite Data 8 experience or staff member!][
-
-    ]
-  ]
 }
+

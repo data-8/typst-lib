@@ -3,36 +3,14 @@
 
 #import "utils.typ": *
 
-// layout styles (footer, header)
-#let header(courseid, coursename, semester, title, assignment) = {
-  box(height: 75pt, [
-    #box(height:35pt)[
-      #line(length: 100%, stroke: 1pt)
-
-      #v(-16pt)
-
-      #align(center)[
-        #smallcaps[#text(title, size: 21pt, tracking: -0.025em)]
-        #v(-18pt)
-        #text(assignment, size: 11pt)
-      ]
-
-      #v(-5pt)
-
-      #line(length: 100%, stroke: 1pt)
-    ]
-
-    #v(4pt)
-
-    #smallcaps[#text(courseid + ": " + coursename, tracking: 0.003em, size: 11pt)]
-    #h(1fr)
-    #smallcaps[#text("UC Berkeley, " + semester, tracking: 0.003em, size: 11pt)]
-
-    #v(0pt, weak: true)
-  ])
-}
-
-#let assignment(doc, courseid: "Data XX", coursename: "Data Science", semester: "Fall 2025", assignment: "Discussion 01", title: "Intro", sols: false) = {
+#let assignment(doc, 
+  courseid: "",
+  coursename: "",
+  school: "",
+  semester: "",
+  assignment: "",
+  title: "",
+  sols: false) = {
   // text styles
   show link: this => {
     underline(this)
@@ -106,7 +84,31 @@
     author: courseid + " Staff"
   )
 
-  header(courseid, coursename, semester, title, assignment)
+  box(height: 75pt, [
+    #box(height:35pt)[
+      #line(length: 100%, stroke: 1pt)
+
+      #v(-16pt)
+
+      #align(center)[
+        #smallcaps[#text(title, size: 21pt, tracking: -0.025em)]
+        #v(-18pt)
+        #text(assignment, size: 11pt)
+      ]
+
+      #v(-5pt)
+
+      #line(length: 100%, stroke: 1pt)
+    ]
+
+    #v(4pt)
+
+    #smallcaps[#text(courseid + ": " + coursename, tracking: 0.003em, size: 11pt)]
+    #h(1fr)
+    #smallcaps[#text(school + ", " + semester, tracking: 0.003em, size: 11pt)]
+
+    #v(0pt, weak: true)
+  ])
 
   doc
 }
