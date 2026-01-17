@@ -36,6 +36,7 @@ There are three library files: `utils.typ` which defines the different question 
 - [Sections](#sections)
 - [Info / Callouts](#info-blockcallout)
 - [Other Utilities](#other-utilities)
+- [Templates](#templates)
 - [Exporting](#exporting)
 
 ## Question Components
@@ -328,6 +329,49 @@ Indicator to see next page.
 > ```
 > <p align="center"><img width=90% alt="Screenshot 2026-01-17 at 17 24 33" src="https://github.com/user-attachments/assets/216d561c-549c-4877-8765-ca36d563e8fa" /></p>
 
+<hr>
+
+## Templates
+
+This library provides two templates, one for writing assignments/worksheets, and the other for exams. You can find examples for assignment templates [here (discussion)](./examples/discussion.pdf) and [here (note)](./examples/note.pdf). You can find an example exam [here](./examples/exam.pdf). The quickstart templates can be found in the [`quickstart/`](./quickstart) directory.
+
+### Assignment
+
+```typst
+#show: doc => assignment(doc,
+  courseid: "Data C8",
+  coursename: "Foundations of Data Science",
+  school: "UC Berkeley",
+  semester: "Fall 2025",
+  assignment: "Discussion 01",
+  title: "Introduction"
+)
+```
+
+### Exam
+
+```typst
+#show: doc => exam(doc,
+  courseid: "Data C8",
+  coursename: "Foundations of Data Science",
+  school: "UC Berkeley",
+  semester: "Fall 2025",
+  instructor: "",
+  examtitle: "Midterm",
+  date: "7:10–9:00pm  Friday, October 17th 2025",
+  length: "110 minutes",
+
+  blanks: ("Your Name", "Your Student ID", "Your Exam Room", "the Name of Person to your Left", "the Name of Person to your Right", "Your GSI's Name (Write N/A if in Self-Service)"),
+  instructions: include("instructions.typ"),
+  extra: include("extra.typ"),
+  sols: false
+)
+```
+
+The `blanks` parameter allows you to pass in an array of strings that create blanks for students to fill out. `instructions` and `include` take in any content which are filled in inside instructions, and underneath it respectively. You may find creating separate files for `instructions` and `extra` and using `include(...)` to be more modular.
+
+
+
 
 <hr>
 
@@ -336,7 +380,7 @@ Indicator to see next page.
 There are three document modes to choose from, `screen`, `print`, and `sol`.
 
 1. `screen`: does not display solutions, and code blocks are highlighted with colour
-2. `print`: does not display solutions, and <u>all code blocks are displayed as black</u>. Accessible exports so printed code can be easily read on paper.
+2. `print`: does not display solutions, and all code blocks are displayed as black. Accessible exports so printed code can be easily read on paper.
 3. `sol`: displays solutions and code blocks in colour
 
 These can be controlled with the Typst state variable `#docmode` and you can use `.update(mode)` to set the mode at the top of the page, which will affect all components underneath it through to end of page, or another `#docmode.update()` statement.
