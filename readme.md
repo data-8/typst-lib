@@ -23,6 +23,16 @@ Example PDFs can be found in the [`examples/`](https://github.com/data-8/typst-l
 
 There are three library files: `utils.typ` which defines the different question components and other niceties, `assignment.typ` which formats for assignment documents (worksheets, notes), and `exam.typ` which formats for exams.
 
+**Quick Navigation**:
+
+- [Question Components](#question-components)
+    - [Long Answer Questions](#1-long-answer-questions)
+    - [Multiple Choice Questions](#2-multiple-choice-questions)
+    - [Answer Banks](#3-answer-banks)
+- [Sections](#sections)
+- [Info / Callouts](#info-blockcallout)
+- [Other Utilities](#other-utilities)
+
 ## Question Components
 
 ### 1. **Long answer questions**
@@ -112,7 +122,7 @@ Multiple choice questions that support different bubble types (circle, box) with
 <br>
 
 
-### **3. Answer bank**
+### **3. Answer banks**
 
 A bank of answer choices to select from.
 
@@ -148,9 +158,7 @@ A bank of answer choices to select from.
 
 <br>
 
-## Document Formatting
-
-### 1. Section
+## Sections
 
 ```typst
 #section(title, height, number, points, content)
@@ -192,7 +200,15 @@ For exams/worksheets that want all questions to display `points` and `number`, y
 ```
 
 
-### 2. Subtitle
+## Info Block/Callout
+
+## Other Utilities
+
+### 1. Boxed Math
+### 2. Blank page indicator
+### 3. Next page indicator
+### 4. Code bubble
+### 5. Subtitle
 
 > **Examples**
 > ```typst
@@ -204,13 +220,3 @@ For exams/worksheets that want all questions to display `points` and `number`, y
 > ```
 > <p align="center"><img width="768" height="127" alt="Screenshot 2026-01-17 at 17 24 33" src="https://github.com/user-attachments/assets/216d561c-549c-4877-8765-ca36d563e8fa" /></p>
 
-
-
-## Info Block/Callout
-
-## Other Utilities
-
-1. Boxed Math
-2. Blank page indicator
-3. Next page indicator
-4. Code bubble
