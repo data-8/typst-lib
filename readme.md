@@ -4,7 +4,7 @@ Templates and formatting for Data 8's Discussion and Tutoring Worksheets, Refere
 
 
 ## Features
-- automatic point totalling for exams
+- automatic point totalling and incrementing sections (for exams or graded assignments)
 - multiple choice questions (single select and multiselect, or mix of bubble types)
 - answer boxes for long answer questions
 - native typst indentation for subquestions
@@ -173,7 +173,6 @@ A bank of answer choices to select from.
 - **`height`** (`length`, default: `auto`): height of entire section
 - **`number`** (`bool`, default: `true`): boolean to automatically count up sections (add `1.`, `2.`, ...etc in front of title)
 - **`points`** (`bool`, default: `false`): boolean to count up points in section
-- **`content`** (`content`): content to be wrapped in section
 
 > **Examples**
 > ```typst
@@ -205,6 +204,42 @@ For exams/worksheets that want all questions to display `points` and `number`, y
 
 
 ## Info Block/Callout
+
+```typst
+#callout(t, content)
+```
+
+**Parameters**
+- **`t`** (`str`): type of callout. Special callout types are `Definition, Formula, Method, Example`. Use empty string `""` to omit the title.
+
+> **Example**
+> ```typst
+> #callout("")[
+>   You may create a callout with an empty string `""` to omit the title. Any non-special typed callout will be grey by default. 
+> ]
+> 
+> Special callout types (`Definition, Formula, Method, Example`)
+> 
+> #callout("Definition")[
+>   A definition callout
+> ]
+> 
+> #callout("Formula")[
+>   A formula callout
+> ]
+> 
+> #callout("Method")[
+>   A method callout
+> ]
+> 
+> #callout("Example")[
+>   An example callout
+> ]
+> ```
+> <p align="center"><img width="768" height="349" alt="Screenshot 2026-01-17 at 18 14 40" src="https://github.com/user-attachments/assets/8de7862e-fc3d-4ca0-b028-6bd95df5b8fe" /></p>
+
+
+## Coding Blanks
 
 ## Other Utilities
 
