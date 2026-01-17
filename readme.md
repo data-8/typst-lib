@@ -215,7 +215,8 @@ For exams/worksheets that want all questions to display `points` and `number`, y
 > **Example**
 > ```typst
 > #callout("")[
->   You may create a callout with an empty string `""` to omit the title. Any non-special typed callout will be grey by default. 
+>   You may create a callout with an empty string `""` to omit the title.
+>   Any non-special typed callout will be grey by default. 
 > ]
 > 
 > Special callout types (`Definition, Formula, Method, Example`)
@@ -306,7 +307,8 @@ Indicator to see next page.
 
 > **Example**
 > ```typst
-> The #bubble(`def`, colorred) keyword is used for creating functions in Python. To return a value in the function, use the #bubble(`return`, colorgreen) keyword.
+> The #bubble(`def`, colorred) keyword is used for creating functions in Python.
+> To return a value in the function, use the #bubble(`return`, colorgreen) keyword.
 > ```
 > <p align="center"><img width=95% alt="Screenshot 2026-01-17 at 18 43 59" src="https://github.com/user-attachments/assets/484831ff-eca5-4a1d-8e83-a8d61929929a" /></p>
 
