@@ -194,6 +194,18 @@ For exams/worksheets that want all questions to display `points` and `number`, y
 
 ### 2. Subtitle
 
+> **Examples**
+> ```typst
+> #section("Section Title", number: false)[
+>   Some content in the section
+>   #subtitle("A smaller title")
+>   More stuff
+> ]
+> ```
+> <p align="center"><img width="768" height="127" alt="Screenshot 2026-01-17 at 17 24 33" src="https://github.com/user-attachments/assets/216d561c-549c-4877-8765-ca36d563e8fa" /></p>
+
+
+
 ## Info Block/Callout
 
 ## Other Utilities
