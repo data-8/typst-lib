@@ -82,7 +82,7 @@ Multiple choice questions that support different bubble types (circle, box) with
 
 ```typst
 #mcq(question, choices, answer, 
-     cols, multi,
+     cols, multi, color,
      ansbox, height, ansheight, ansalign, explanation, points)
 ````
 
@@ -91,6 +91,7 @@ Multiple choice questions that support different bubble types (circle, box) with
 - **`choices`** (array of `content`, required): choices
 - **`answer`** (`int` or array of `int`): **index** (0-indexed) of correct answer choice OR array of correct answer choices
 - **`cols`** (`int` or array of `length`, default: `1`): number of answer choice columns. defaults to `1` so options are shown vertically. For horizontal use column count equivalent to number of choices. You may also specify array of lengths, where each length corresponds to the length of that choice displayed horizontally
+- **`color`** (`color`, default: `colorblue`): sets color of bubble fill in answer mode
 - **`multi`** (`bool` or array of `bool`, default: `false`): display box as square (multi = `true`) or circle (multi = `false`). You may specify an array of booleans to customise each bubble
 - **`explanation`** (`content`, default: `""`): an explanation of the selected answer option displayed underneath the question. Only shown when answers are shown
 - **`ansbox, height, ansheight, ansalign, points`**: same as `#question` (see above)
@@ -329,6 +330,25 @@ Indicator to see next page.
 > ]
 > ```
 > <p align="center"><img width=90% alt="Screenshot 2026-01-17 at 17 24 33" src="https://github.com/user-attachments/assets/216d561c-549c-4877-8765-ca36d563e8fa" /></p>
+
+### 6. Colours
+
+This library provides a few colours that can be used, and are defined as follows:
+
+| colour          | hex       |                                                       |
+| --------------- | --------- | ----------------------------------------------------- |
+| `colorblue`       | `#2A40E2` | ![#2A40E2](https://readme-swatches.vercel.app/2A40E2) |
+| `colorcyan`       | `#6993BF` | ![#6993BF](https://readme-swatches.vercel.app/6993BF) |
+| `colorred`        | `#DD4466` | ![#DD4466](https://readme-swatches.vercel.app/DD4466) |
+| `colorgreen`      | `#59B279` | ![#59B279](https://readme-swatches.vercel.app/59B279) |
+| `colorgrey`       | `#808C80` | ![#808C80](https://readme-swatches.vercel.app/808C80) |
+| `colorlightcyan`  | `#E8EDF4` | ![#E8EDF4](https://readme-swatches.vercel.app/E8EDF4) |
+| `colorlightred`   | `#F4E8EC` | ![#F4E8EC](https://readme-swatches.vercel.app/F4E8EC) |
+| `colorlightgreen` | `#E8F4EC` | ![#E8F4EC](https://readme-swatches.vercel.app/E8F4EC) |
+| `colorlightgrey`  | `#F6F6F6` | ![#F6F6F6](https://readme-swatches.vercel.app/F6F6F6) |
+
+
+
 
 <hr>
 

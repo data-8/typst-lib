@@ -203,6 +203,7 @@
   ansbox: false,
   height: auto, ansheight: auto,
   ansalign: horizon,
+  color: colorblue,
   explanation: "",
   points: "",) = {
 
@@ -215,8 +216,8 @@
     let h = _getheight(height, ansheight, ansbox)
 
     let items = range(length).map(i => [
-      #let fill = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { white }
-      #let strokecolor = if docmode.get() == "sol" and ansarr.contains(i) { colorblue } else { black }
+      #let fill = if docmode.get() == "sol" and ansarr.contains(i) { color } else { white }
+      #let strokecolor = if docmode.get() == "sol" and ansarr.contains(i) { color } else { black }
 
       #box(height: 7.5pt, width: 12pt,
         align(horizon)[
